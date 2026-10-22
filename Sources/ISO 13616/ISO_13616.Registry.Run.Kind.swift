@@ -1,7 +1,4 @@
 extension ISO_13616.Registry.Run {
-
-    /// The characters a run admits: `n`, `a`, or `c` in the registry's
-    /// notation.
     internal enum Kind: Sendable {
         case digits
         case letters
@@ -10,12 +7,18 @@ extension ISO_13616.Registry.Run {
 }
 
 extension ISO_13616.Registry.Run.Kind {
-
-    internal func admits(_ scalar: Unicode.Scalar) -> Bool {
+    internal func admits(_ byte: UInt8) -> Bool {
+        let digit = (UInt8(ascii: "0")...UInt8(ascii: "9")).contains(byte)
+        let letter = (UInt8(ascii: "A")...UInt8(ascii: "Z")).contains(byte)
         switch self {
-        case .digits: ("0"..."9").contains(scalar)
-        case .letters: ("A"..."Z").contains(scalar)
-        case .alphanumerics: ("0"..."9").contains(scalar) || ("A"..."Z").contains(scalar)
+        case .digits:
+            return digit
+
+        case .letters:
+            return letter
+
+        case .alphanumerics:
+            return digit || letter
         }
     }
 }

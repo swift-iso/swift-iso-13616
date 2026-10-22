@@ -1,20 +1,17 @@
 extension ISO_13616.Registry {
-
-    /// The length of a BBAN with `structure`.
-    internal static func length(of structure: [Run]) -> Int {
+    internal static func length(of structure: [ISO_13616.Registry.Run]) -> Int {
         structure.map(\.count).reduce(0, +)
     }
 
-    /// Whether `bban` consists of exactly the runs of `structure`.
-    internal static func matches(_ bban: Substring, _ structure: [Run]) -> Bool {
-        var scalars = bban.unicodeScalars[...]
+    internal static func matches(_ bban: Substring, _ structure: [ISO_13616.Registry.Run]) -> Bool {
+        var bytes = bban.utf8[...]
         for run in structure {
-            let segment = scalars.prefix(run.count)
+            let segment = bytes.prefix(run.count)
             guard segment.count == run.count, segment.allSatisfy(run.kind.admits) else {
                 return false
             }
-            scalars = scalars.dropFirst(run.count)
+            bytes = bytes.dropFirst(run.count)
         }
-        return scalars.isEmpty
+        return bytes.isEmpty
     }
 }

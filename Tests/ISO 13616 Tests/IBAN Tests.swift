@@ -1,6 +1,5 @@
-import Testing
-
 import ISO_13616
+import Testing
 
 extension ISO_13616.IBAN {
     @Suite struct Test {
@@ -101,7 +100,7 @@ extension ISO_13616.IBAN.Test.`Edge Case` {
 
     @Test
     func `lower-case text is refused`() {
-        #expect(throws: ISO_13616.IBAN.Error.invalidCharacter("n")) {
+        #expect(throws: ISO_13616.IBAN.Error.invalidCharacter) {
             try ISO_13616.IBAN("nl91abna0417164300")
         }
     }
@@ -128,7 +127,7 @@ extension ISO_13616.IBAN.Test.`Edge Case` {
 
     @Test
     func `non-ASCII characters are refused`() {
-        #expect(throws: ISO_13616.IBAN.Error.invalidCharacter("\u{301}")) {
+        #expect(throws: ISO_13616.IBAN.Error.invalidCharacter) {
             try ISO_13616.IBAN("NL91ABNA0417164300\u{301}")
         }
     }

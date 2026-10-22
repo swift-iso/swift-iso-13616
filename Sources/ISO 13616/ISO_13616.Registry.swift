@@ -1,20 +1,6 @@
 extension ISO_13616 {
-
-    /// The ISO 13616-2 registry of national IBAN formats.
-    ///
-    /// Each registered country code maps to the structure of that country's
-    /// basic bank account number (BBAN): fixed-length runs of digits,
-    /// upper-case letters, or both. The IBAN is four characters longer than
-    /// the BBAN.
-    ///
-    /// Transcribed in October 2026 from two public copies of the registry SWIFT
-    /// publishes as the ISO 13616 registration authority (Wikipedia's IBAN
-    /// formats table and the php-iban registry). They agree for 85 of the 89
-    /// countries. For `QA` they differ, and the looser structure is kept. `FK`,
-    /// `LY`, `MN` and `SO` appear in one copy only.
     internal enum Registry {
-
-        internal static let bban: [String: [Run]] = [
+        internal static let bban: [String: [ISO_13616.Registry.Run]] = [
             "AD": [.init(8, .digits), .init(12, .alphanumerics)],
             "AE": [.init(19, .digits)],
             "AL": [.init(8, .digits), .init(16, .alphanumerics)],
