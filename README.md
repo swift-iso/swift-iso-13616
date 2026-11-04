@@ -1,28 +1,13 @@
 # swift-iso-13616
 
-![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+Use this package when you need to check that an IBAN is well formed before you store it or send it on. Start from `ISO_13616.IBAN`. A value that passes is a valid IBAN, not proof that the account exists.
 
-Swift implementation of ISO 13616, the international bank account number (IBAN).
+## Laws
 
-## Overview
-
-`ISO_13616.IBAN` has one initializer, and it validates: the country must be in the ISO 13616-2 registry, the account number (BBAN) must have the structure and length the registry fixes for that country, and the check digits must satisfy ISO 7064 MOD 97-10. Both the electronic format and the paper format (groups of four) are accepted; the value is kept in electronic format.
-
-```swift
-import ISO_13616
-
-let iban = try ISO_13616.IBAN("NL91 ABNA 0417 1643 00")
-iban.value    // "NL91ABNA0417164300"
-iban.country  // "NL"
-iban.bban     // "ABNA0417164300"
-```
-
-## The registry
-
-The BBAN structures for the 89 registered countries were transcribed in October 2026 from two public copies of the registry SWIFT publishes as the ISO 13616 registration authority: Wikipedia's IBAN formats table and the php-iban registry. The copies agree for 85 countries. For `QA` they differ, and the looser structure is kept; `FK`, `LY`, `MN` and `SO` appear in one copy only. See issue #1 for checking the table against a cited registry release.
-
-A well-formed IBAN is not necessarily an account that exists.
-
-## License
-
-Apache 2.0. See [LICENSE.md](LICENSE.md).
+- Input is either the electronic format, with no spaces, or the paper format: groups of four separated by single spaces, with a last group of one to four characters. Any other spacing is refused, including a trailing space.
+- Only upper-case ASCII letters, digits and spaces are accepted. Lower-case text such as `nl91abna0417164300` is refused, not upper-cased.
+- `ISO_13616.IBAN.value` always holds the electronic format, so the paper and electronic forms of one IBAN give equal values. `ISO_13616.IBAN.description` is the electronic format too, and `ISO_13616.IBAN.paper` regroups it in fours.
+- The country must be one of the 89 in the package's registry table. That table fixes the length and the run of digits, letters or alphanumerics in the BBAN for each country.
+- Check digits must be `02` to `98`. `00`, `01` and `99` are refused even when the MOD 97-10 sum would accept them.
+- The checksum is ISO 7064 MOD 97-10 over the BBAN followed by the first four characters. It catches a changed digit and two transposed digits.
+- Checks run in a fixed order: characters, spacing, country, length, check digits, BBAN structure, checksum. An IBAN with a correct checksum still fails if its length or BBAN structure is wrong for its country.
