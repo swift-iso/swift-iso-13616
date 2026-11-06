@@ -1,14 +1,16 @@
 import ISO_13616
 import Testing
 
-extension ISO_13616.IBAN {
+enum `ISO_13616.IBAN Tests` {}
+
+extension `ISO_13616.IBAN Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
     }
 }
 
-extension ISO_13616.IBAN.Test.Unit {
+extension `ISO_13616.IBAN Tests`.Test.Unit {
 
     @Test(arguments: [
         "GB82WEST12345698765432",
@@ -58,7 +60,7 @@ extension ISO_13616.IBAN.Test.Unit {
     }
 }
 
-extension ISO_13616.IBAN.Test.`Edge Case` {
+extension `ISO_13616.IBAN Tests`.Test.`Edge Case` {
 
     @Test
     func `a correct checksum at the wrong length is refused`() {
