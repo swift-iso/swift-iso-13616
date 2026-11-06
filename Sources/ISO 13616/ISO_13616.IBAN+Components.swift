@@ -1,4 +1,6 @@
 extension ISO_13616.IBAN {
+    // swift-linter:disable:next raw concept
+    // REASON: the IBAN registry holds XK, which ISO_3166.Alpha2 refuses as it is not in ISO 3166-1, so this can't be ISO_3166.Alpha2 or ISO_3166.Code without losing valid IBANs
     public var country: Substring {
         value.prefix(2)
     }
