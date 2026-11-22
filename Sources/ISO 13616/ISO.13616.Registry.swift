@@ -1,9 +1,9 @@
-extension ISO_13616 {
+extension ISO.`13616` {
     internal enum Registry {}
 }
 
-extension ISO_13616.Registry {
-    internal static let bban: [String: [ISO_13616.Registry.Run]] = [
+extension ISO.`13616`.Registry {
+    internal static let bban: [String: [ISO.`13616`.Registry.Run]] = [
         "AD": [.init(8, .digits), .init(12, .alphanumerics)],
         "AE": [.init(19, .digits)],
         "AL": [.init(8, .digits), .init(16, .alphanumerics)],

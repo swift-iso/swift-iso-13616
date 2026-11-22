@@ -1,4 +1,4 @@
-extension ISO_13616.IBAN: Codable {
+extension ISO.`13616`.IBAN: Codable {
 
     public init(from decoder: any Decoder) throws {
         try self.init(try decoder.singleValueContainer().decode(String.self))

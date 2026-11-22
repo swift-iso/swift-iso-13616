@@ -1,4 +1,4 @@
-extension ISO_13616.IBAN {
+extension ISO.`13616`.IBAN {
     public enum Error: Swift::Error, Sendable, Equatable {
         case invalidCharacter
         case invalidGrouping

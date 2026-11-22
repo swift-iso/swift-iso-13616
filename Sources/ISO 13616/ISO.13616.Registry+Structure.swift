@@ -1,9 +1,9 @@
-extension ISO_13616.Registry {
-    internal static func length(of structure: [ISO_13616.Registry.Run]) -> Int {
+extension ISO.`13616`.Registry {
+    internal static func length(of structure: [ISO.`13616`.Registry.Run]) -> Int {
         structure.map(\.count).reduce(0, +)
     }
 
-    internal static func matches(_ bban: Substring, _ structure: [ISO_13616.Registry.Run]) -> Bool {
+    internal static func matches(_ bban: Substring, _ structure: [ISO.`13616`.Registry.Run]) -> Bool {
         var bytes = bban.utf8[...]
         for run in structure {
             let segment = bytes.prefix(run.count)
